@@ -14,19 +14,19 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	int by; // block y
 	int mm; // mm=movement
 
+
 	/*
 	 * public void paintComponent(Graphics g) { g.setColor(Color.BLUE);
 	 * g.fillRect(0, 0, 30, 30); }
 	 */
 
 	public Panel() {
-		bx = 10;
+		bx = 50;
 		by = 100;
+		mm = 0;
 		t1 = new Timer(1000 / 100, this);
-		p2 = new Player(bx, by, 30, 30);
-		mm = 5;
-		p2.repaint();
-	}
+		p2 = new Player(bx+mm, by-mm, 30, 30);
+		}
 
 	void startGame() {
 		t1.start();
@@ -37,29 +37,18 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		p2.draw(g);
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("hi");
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getKeyCode() == KeyEvent.VK_UP) {
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			by -= mm;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-
-		}
+		
 		System.out.println("kt");
 
 	}
@@ -67,13 +56,36 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("kp");
-	}
+		
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			mm-=5;
+			p2 = new Player(bx+mm, by-mm, 30, 30);
+			System.out.println("UP");
+		
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			mm+=5;
+			p2 = new Player(bx+mm, by-mm, 30, 30);
+			System.out.println("DOWN");
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			mm-=5;
+			p2 = new Player(bx+mm, by-mm, 30, 30);
+			System.out.println("LEFT");
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			mm+=5;
+			p2 = new Player(bx+mm, by-mm, 30, 30);
+			System.out.println("RIGHT");
+
+		}	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("ke");
+		//System.out.println("ke");
 	}
 
 }
