@@ -14,6 +14,7 @@ public class Player extends Component {
 	void draw(Graphics g) {
 		g.setColor(Color.blue);
 		g.fillRect(X, Y, 30, 30);
+		System.out.println(X+" "+Y);
 	}
 
 }
