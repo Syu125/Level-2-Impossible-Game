@@ -10,7 +10,6 @@ public class Board {
 	static int width = 1000;
 	JFrame f1;
 	Panel p1;
-	int temp = 0;
 	
 	public static void main(String[] args) {
 		Board b = new Board();
