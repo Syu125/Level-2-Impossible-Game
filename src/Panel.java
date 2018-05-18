@@ -18,8 +18,14 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	Blocks b4;
 	Blocks b5;
 	Board board;
+	final int level1 = 1;
+	final int level2 = 2;
+	int level = level1;
 	int bx; // block x
 	int by; // block y
+	Boolean start = true;
+	Boolean dead = false;
+	Boolean finish = false;
 
 	/*
 	 * public void paintComponent(Graphics g) { g.setColor(Color.BLUE);
@@ -60,21 +66,51 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		if (p2.X >= 940) {
-			board.drawFinish(g);
+		if (start) {
+			g.setColor(Color.GREEN);
+			g.fillRect(100, 0, 20, 500);
+			g.setColor(Color.GREEN);
+			g.fillRect(910, 0, 20, 500);
+			p2.draw(g);
+			b1.draw(g);
+			b2.draw(g);
+			b3.draw(g);
+			b4.draw(g);
+			b5.draw(g);
 		}
-
-		g.setColor(Color.GREEN);
-		g.fillRect(100, 0, 20, 500);
-		g.setColor(Color.GREEN);
-		g.fillRect(910, 0, 20, 500);
-		p2.draw(g);
-		b1.draw(g);
-		b2.draw(g);
-		b3.draw(g);
-		b4.draw(g);
-		b5.draw(g);
-
+		if (p2.X >= 940) {
+			board.currentState = board.FINISH_STATE;
+			finish = true;
+			start = false;
+		}
+		if (finish) {
+			board.drawFinish(g);
+			board.currentState = board.GAME_STATE;
+		}
+		if (p2.X >= b1.blockx - 20 && p2.X <= b1.blockx + 20 && p2.Y >= b1.blocky - 20 && p2.Y <= b1.blocky + 20) {
+			board.currentState = board.END_STATE;
+			dead = true;
+		}
+		if (p2.X >= b2.blockx - 20 && p2.X <= b2.blockx + 20 && p2.Y >= b2.blocky - 20 && p2.Y <= b2.blocky + 20) {
+			board.currentState = board.END_STATE;
+			dead = true;
+		}
+		if (p2.X >= b3.blockx - 20 && p2.X <= b3.blockx + 20 && p2.Y >= b3.blocky - 20 && p2.Y <= b3.blocky + 20) {
+			board.currentState = board.END_STATE;
+			dead = true;
+		}
+		if (p2.X >= b4.blockx - 20 && p2.X <= b4.blockx + 20 && p2.Y >= b4.blocky - 20 && p2.Y <= b4.blocky + 20) {
+			board.currentState = board.END_STATE;
+			dead = true;
+		}
+		if (p2.X >= b5.blockx - 20 && p2.X <= b5.blockx + 20 && p2.Y >= b5.blocky - 20 && p2.Y <= b5.blocky + 20) {
+			board.currentState = board.END_STATE;
+			dead = true;
+		}
+		if (dead) {
+			board.drawDie(g);
+			start = false;
+		}
 	}
 
 	@Override
@@ -87,8 +123,6 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-		System.out.println("kt");
-
 	}
 
 	@Override
@@ -97,23 +131,30 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			p2.Y -= 10;
-			System.out.println("UP");
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 			p2.Y += 10;
-			System.out.println("DOWN");
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 			p2.X -= 10;
-			System.out.println("LEFT");
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			p2.X += 10;
-			System.out.println("RIGHT");
 
+		}
+		if (e.getKeyCode() == KeyEvent.VK_N) {
+			System.out.println("next");
+			if (level == level1) {
+				level2();
+			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_R) {
+			level1();
+			board.currentState = board.GAME_STATE;
+			start = true;
 		}
 	}
 
