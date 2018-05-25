@@ -45,6 +45,7 @@ public class Board {
 		g.setColor(Color.BLACK);
 		g.setFont(finish);
 		g.drawString("CONGRATULATIONS! YOU COMPLETED THIS LEVEL!", 220, 250);
+		g.drawString("Press ENTER to continue one to the next phase!", 220, 300);
 	}
 
 	void drawDie(Graphics g) {

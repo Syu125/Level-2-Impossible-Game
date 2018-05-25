@@ -6,10 +6,10 @@ public class Blocks {
 	int blocky;
 	int speed;
 
-	public Blocks(int x, int y) {
+	public Blocks(int x, int y, int s) {
 		blockx = x;
 		blocky = y;
-		speed = 5;
+		speed = s;
 	}
 
 	void draw(Graphics g) {

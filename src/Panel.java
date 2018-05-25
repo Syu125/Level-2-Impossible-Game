@@ -4,7 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -18,14 +21,20 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	Blocks b4;
 	Blocks b5;
 	Board board;
+
 	final int level1 = 1;
 	final int level2 = 2;
+	final int level3 = 3;
+	final int level4 = 4;
 	int level = level1;
 	int bx; // block x
 	int by; // block y
+
 	Boolean start = true;
 	Boolean dead = false;
 	Boolean finish = false;
+
+	public static BufferedImage grid;
 
 	/*
 	 * public void paintComponent(Graphics g) { g.setColor(Color.BLUE);
@@ -39,6 +48,15 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		p2 = new Player(bx, by, 30, 30);
 		board = b;
 		level1();
+		try {
+			grid = ImageIO.read(this.getClass().getResourceAsStream("grid.png"));
+		} catch (IOException e) {
+
+			// TODO Auto-generated catch block
+
+			e.printStackTrace();
+
+		}
 	}
 
 	void startGame() {
@@ -47,26 +65,57 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void level1() {
-		b1 = new Blocks(150, 100);
-		b2 = new Blocks(300, 460);
-		b3 = new Blocks(450, 100);
-		b4 = new Blocks(700, 460);
-		b5 = new Blocks(850, 100);
+
+		b1 = new Blocks(150, 100, 5);
+		b2 = new Blocks(300, 460, 5);
+		b3 = new Blocks(450, 100, 5);
+		b4 = new Blocks(700, 460, 5);
+		b5 = new Blocks(850, 100, 5);
 	}
 
 	void level2() {
-		b1 = new Blocks(150, 120);
-		b2 = new Blocks(300, 460);
-		b3 = new Blocks(450, 370);
-		b4 = new Blocks(700, 220);
-		b5 = new Blocks(850, 100);
+		b1 = new Blocks(150, 120, 5);
+		b2 = new Blocks(300, 460, 5);
+		b3 = new Blocks(450, 370, 5);
+		b4 = new Blocks(700, 220, 5);
+		b5 = new Blocks(850, 100, 5);
+	}
+
+	void level3() {
+		b1 = new Blocks(150, 200, 10);
+		b2 = new Blocks(300, 460, 10);
+		b3 = new Blocks(450, 370, 10);
+		b4 = new Blocks(700, 220, 10);
+		b5 = new Blocks(850, 100, 10);
+	}
+
+	void level4() {
+		b1 = new Blocks(150, 110, 15);
+		b2 = new Blocks(300, 460, 15);
+		b3 = new Blocks(450, 370, 15);
+		b4 = new Blocks(700, 220, 15);
+		b5 = new Blocks(850, 170, 15);
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
+		System.out.println(start);
 		if (start) {
+			g.drawImage(grid, 0, 0, 1000, 700, null);
+			g.setColor(Color.GREEN);
+			g.fillRect(100, 0, 20, 500);
+			g.setColor(Color.GREEN);
+			g.fillRect(910, 0, 20, 500);
+			p2.draw(g);
+			b1.draw(g);
+			b2.draw(g);
+			b3.draw(g);
+			b4.draw(g);
+			b5.draw(g);
+		}
+		if (dead.FALSE) {
 			g.setColor(Color.GREEN);
 			g.fillRect(100, 0, 20, 500);
 			g.setColor(Color.GREEN);
@@ -85,7 +134,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		}
 		if (finish) {
 			board.drawFinish(g);
-			board.currentState = board.GAME_STATE;
+			board.currentState = board.FINISH_STATE;
 		}
 		if (p2.X >= b1.blockx - 20 && p2.X <= b1.blockx + 20 && p2.Y >= b1.blocky - 20 && p2.Y <= b1.blocky + 20) {
 			board.currentState = board.END_STATE;
@@ -110,6 +159,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		if (dead) {
 			board.drawDie(g);
 			start = false;
+			dead = true;
 		}
 	}
 
@@ -145,16 +195,36 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 			p2.X += 10;
 
 		}
-		if (e.getKeyCode() == KeyEvent.VK_N) {
-			System.out.println("next");
+		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+
 			if (level == level1) {
 				level2();
+				start = true;
+				finish = false;
+				level = level2;
+				p2.X = 10;
+				p2.Y = 100;
+			} else if (level == level2) {
+				level3();
+				start = true;
+				finish = false;
+				level = level3;
+				p2.X = 10;
+				p2.Y = 100;
+			} else if (level == level3) {
+				level4();
+				start = true;
+				finish = false;
+				level = level4;
+				p2.X = 10;
+				p2.Y = 100;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_R) {
 			level1();
-			board.currentState = board.GAME_STATE;
-			start = true;
+			t1.stop();
+			board.setup();
+			dead = false;
 		}
 	}
 
