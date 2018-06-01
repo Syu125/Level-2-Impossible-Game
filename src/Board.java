@@ -48,7 +48,7 @@ public class Board {
 		g.setFont(start);
 		g.drawString("THE IMPOSSIBLE", 220, 200);
 		g.setFont(restart);
-		g.drawString("Press SHIFT to continue one to the next phase!", 295, 400);
+		g.drawString("Press SHIFT to continue on to the next phase!", 295, 400);
 		g.drawString("RULES: Use the arrow keys to control your player", 280, 240);
 	}
 

@@ -27,6 +27,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	final int level3 = 3;
 	final int level4 = 4;
 	final int level5 = 5;
+	final int end =  6;
 	int level = level1;
 	int bx; // block x
 	int by; // block y
@@ -61,7 +62,7 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void level1() {
-
+		level = level1;
 		b1 = new Blocks(150, 100, 5);
 		b2 = new Blocks(300, 460, 5);
 		b3 = new Blocks(450, 100, 5);
@@ -106,12 +107,12 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		System.out.println(start);
-		if(p2.Y == 0) {
+		/*if(p2.Y == 0) {
 			p2.Y = by;
 		}
 		if(p2.Y == 420) {
 			p2.Y = by;
-		}
+		}*/
 		if (start) {
 			g.drawImage(grid, 0, 0, 1000, 700, null);
 			g.setColor(Color.GREEN);
@@ -175,6 +176,19 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 			start = false;
 			dead = true;
 		}
+		if (level == end) {
+			finish(g);
+		}
+	}
+	
+	void finish(Graphics g) {
+		g.setColor(Color.YELLOW);
+		g.fillRect(0, 0, board.width, board.length);
+		g.setColor(Color.BLACK);
+		g.setFont(board.start);
+		g.drawString("CONGRATULATIONS!", 220, 200);
+		g.drawString("YOU WIN!", 340, 280);
+	
 	}
 
 	@Override
@@ -245,7 +259,10 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 				level = level5;
 				p2.X = 10;
 				p2.Y = 100;
+			} else if (level == level5) {
+				level = end;
 			}
+				
 		}
 		if (e.getKeyCode() == KeyEvent.VK_R) {
 			level1();
