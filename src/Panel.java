@@ -26,20 +26,24 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	final int level2 = 2;
 	final int level3 = 3;
 	final int level4 = 4;
+	final int level5 = 5;
 	int level = level1;
 	int bx; // block x
 	int by; // block y
 
+	Boolean command = true;
 	Boolean start = true;
 	Boolean dead = false;
 	Boolean finish = false;
+	Boolean restart = false;
 
 	public static BufferedImage grid;
 
-	/*
-	 * public void paintComponent(Graphics g) { g.setColor(Color.BLUE);
-	 * g.fillRect(0, 0, 30, 30); }
-	 */
+	
+	  public void paintComponent1(Graphics g) {
+		 g.setColor(Color.BLUE);
+	  g.fillRect(0, 0, 30, 30); }
+	 
 
 	public Panel(Board b) {
 		bx = 50;
@@ -48,17 +52,9 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		p2 = new Player(bx, by, 30, 30);
 		board = b;
 		level1();
-		try {
-			grid = ImageIO.read(this.getClass().getResourceAsStream("grid.png"));
-		} catch (IOException e) {
-
-			// TODO Auto-generated catch block
-
-			e.printStackTrace();
-
-		}
+		
 	}
-
+	
 	void startGame() {
 		t1.start();
 
@@ -97,11 +93,25 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		b5 = new Blocks(850, 170, 15);
 	}
 
+	void level5() {
+		b1 = new Blocks(150, 210, 15);
+		b2 = new Blocks(300, 360, 15);
+		b3 = new Blocks(450, 460, 15);
+		b4 = new Blocks(700, 320, 15);
+		b5 = new Blocks(850, 170, 15);
+	}
+
 	@Override
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		System.out.println(start);
+		if(p2.Y == 0) {
+			p2.Y = by;
+		}
+		if(p2.Y == 420) {
+			p2.Y = by;
+		}
 		if (start) {
 			g.drawImage(grid, 0, 0, 1000, 700, null);
 			g.setColor(Color.GREEN);
@@ -131,6 +141,10 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 			board.currentState = board.FINISH_STATE;
 			finish = true;
 			start = false;
+		}
+		if(command) {
+		board.drawStart(g);
+		board.currentState = board.GAME_STATE;
 		}
 		if (finish) {
 			board.drawFinish(g);
@@ -179,6 +193,12 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 
+		if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+			command = false;
+			start = true;
+			level1();
+			}
+		
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			p2.Y -= 10;
 
@@ -216,6 +236,13 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 				start = true;
 				finish = false;
 				level = level4;
+				p2.X = 10;
+				p2.Y = 100;
+			} else if (level == level4) {
+				level5();
+				start = true;
+				finish = false;
+				level = level5;
 				p2.X = 10;
 				p2.Y = 100;
 			}

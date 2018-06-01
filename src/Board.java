@@ -9,14 +9,16 @@ public class Board {
 	static int width = 1000;
 	JFrame f1;
 	Panel p1;
+	Font start = new Font("Impact", Font.PLAIN, 80);
 	Font end = new Font("Impact", Font.PLAIN, 50);
 	Font finish = new Font("Impact", Font.PLAIN, 30);
 	Font restart = new Font("Impact", Font.PLAIN, 20);
 
+	final int START_STATE = -1;
 	final int GAME_STATE = 0;
 	final int FINISH_STATE = 1;
 	final int END_STATE = 2;
-	int currentState = GAME_STATE;
+	int currentState = START_STATE;
 
 	public static void main(String[] args) {
 		Board b = new Board();
@@ -37,6 +39,17 @@ public class Board {
 		f1.addKeyListener(p1);
 		p1.startGame();
 
+	}
+	
+	void drawStart(Graphics g) {
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, width, length);
+		g.setColor(Color.WHITE);
+		g.setFont(start);
+		g.drawString("THE IMPOSSIBLE", 220, 200);
+		g.setFont(restart);
+		g.drawString("Press SHIFT to continue one to the next phase!", 295, 400);
+		g.drawString("RULES: Use the arrow keys to control your player", 280, 240);
 	}
 
 	void drawFinish(Graphics g) {
