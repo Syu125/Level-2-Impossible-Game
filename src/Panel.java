@@ -107,12 +107,12 @@ public class Panel extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		System.out.println(start);
-		/*if(p2.Y == 0) {
+		if(p2.Y == 0) {
 			p2.Y = by;
 		}
 		if(p2.Y == 420) {
 			p2.Y = by;
-		}*/
+		}
 		if (start) {
 			g.drawImage(grid, 0, 0, 1000, 700, null);
 			g.setColor(Color.GREEN);
